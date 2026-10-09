@@ -2166,7 +2166,7 @@
 
       function onMessage(event) {
         if (
-          event.source !== iframe.contentWindow ||
+          !/^https:\/\/[a-z0-9-]+-script\.googleusercontent\.com$/.test(event.origin) ||
           !event.data ||
           event.data.type !== "FB_CASHBACK_API_RESULT" ||
           event.data.requestId !== requestId
