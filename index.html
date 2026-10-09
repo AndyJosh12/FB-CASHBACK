@@ -882,6 +882,39 @@
       border: 1px solid var(--line);
     }
 
+    .receipt-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 16px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .receipt-brand img {
+      width: 76px;
+      height: 76px;
+      object-fit: contain;
+    }
+
+    .receipt-brand div {
+      display: grid;
+      gap: 4px;
+    }
+
+    .receipt-brand strong {
+      color: var(--navy-dark);
+      font-size: 18px;
+      letter-spacing: .04em;
+    }
+
+    .receipt-brand span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
     .receipt-row {
       display: flex;
       justify-content: space-between;
@@ -1046,6 +1079,10 @@
 
       #staffScreen .receipt {
         border: 0;
+      }
+
+      #staffScreen .receipt-brand {
+        break-inside: avoid;
       }
     }
   </style>
@@ -1939,6 +1976,13 @@
           <div id="staffReceipt" class="staff-receipt" hidden>
             <div class="section-title">Completed customer receipt</div>
             <div class="receipt">
+              <div class="receipt-brand">
+                <img src="fb-fashions-logo.png" alt="FB Fashions logo">
+                <div>
+                  <strong>FB FASHIONS</strong>
+                  <span>VIP CLUB CUSTOMER RECEIPT</span>
+                </div>
+              </div>
               <div class="receipt-row"><span>Customer</span><strong id="receiptName"></strong></div>
               <div class="receipt-row"><span>Reference</span><strong id="receiptReference"></strong></div>
               <div class="receipt-row"><span>Phone</span><strong id="receiptPhone"></strong></div>
