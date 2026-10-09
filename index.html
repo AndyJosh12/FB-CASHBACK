@@ -1,0 +1,2628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102c76">
+
+  <title>FB Fashions VIP Club - Cashback Rewards</title>
+
+  <style>
+    :root {
+      --navy: #12317a;
+      --navy-dark: #0b2258;
+      --navy-soft: #eaf0fb;
+      --red: #ff0000;
+      --blue: #1116ff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9e0ec;
+      --white: #ffffff;
+      --success: #16803c;
+      --shadow: 0 18px 50px rgba(15, 34, 78, 0.16);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7fb;
+      color: var(--ink);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+    }
+
+    .screen {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* ================================
+       LOGO
+    ================================= */
+
+    .brand-logo-box {
+      width: 190px;
+      background: white;
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-logo-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .mini-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    .mini-logo-img {
+      width: 65px;
+      height: 48px;
+      object-fit: contain;
+      background: white;
+      border-radius: 8px;
+      padding: 3px;
+    }
+
+    /* ================================
+       COVER
+    ================================= */
+
+    .cover {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      color: white;
+
+      background:
+        radial-gradient(circle at 80% 18%, rgba(255,255,255,.12), transparent 24%),
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,.08), transparent 28%),
+        linear-gradient(135deg, #173a8f 0%, #102f76 48%, #0d2459 100%);
+    }
+
+    .cover:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          115deg,
+          transparent 0 44%,
+          rgba(255,255,255,.045) 45% 46%,
+          transparent 47% 100%
+        ),
+        linear-gradient(
+          25deg,
+          transparent 0 57%,
+          rgba(255,255,255,.035) 58% 59%,
+          transparent 60% 100%
+        );
+
+      pointer-events: none;
+    }
+
+    .cover-card {
+      width: min(960px, 100%);
+      min-height: 620px;
+
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 30px;
+
+      box-shadow: 0 30px 90px rgba(0,0,0,.24);
+
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-left,
+    .cover-right {
+      padding: 56px;
+    }
+
+    .cover-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,.04),
+          rgba(255,255,255,.01)
+        );
+
+      border-right: 1px dashed rgba(255,255,255,.20);
+    }
+
+    .cover-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      gap: 28px;
+    }
+
+    .cover-kicker {
+      font-size: 13px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      opacity: .8;
+    }
+
+    .cover h1 {
+      margin: 0;
+
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+
+      font-size: clamp(35px, 5vw, 64px);
+      line-height: 1.06;
+      letter-spacing: .02em;
+    }
+
+    .cover h1 span {
+      display: block;
+      width: 160px;
+      height: 3px;
+      background: var(--red);
+      margin: 20px auto;
+    }
+
+    .cover-sub {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      letter-spacing: .08em;
+    }
+
+    .cover-note {
+      opacity: .75;
+      font-size: 14px;
+    }
+
+    /* ================================
+       BUTTONS
+    ================================= */
+
+    .primary-btn,
+    .secondary-btn,
+    .text-btn {
+      border: none;
+      border-radius: 14px;
+      padding: 15px 20px;
+      font-weight: 800;
+      transition: .2s ease;
+    }
+
+    .primary-btn {
+      background: var(--red);
+      color: white;
+      box-shadow: 0 10px 24px rgba(255,0,0,.22);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    .secondary-btn {
+      background: white;
+      color: var(--navy);
+      border: 1px solid var(--line);
+    }
+
+    .text-btn {
+      background: transparent;
+      color: var(--navy);
+      padding: 10px;
+    }
+
+    .cover-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ================================
+       TOP BAR
+    ================================= */
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      width: min(1180px, calc(100% - 28px));
+      margin: auto;
+
+      min-height: 72px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 16px;
+    }
+
+    /* ================================
+       PAGE
+    ================================= */
+
+    .page {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 36px 0 80px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero-card,
+    .panel {
+      background: white;
+
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 34px;
+    }
+
+    .eyebrow {
+      color: var(--red);
+
+      font-size: 12px;
+      font-weight: 900;
+
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .hero-card h2 {
+      margin: 9px 0 12px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: clamp(32px, 4vw, 52px);
+
+      color: var(--navy-dark);
+    }
+
+    .lead {
+      font-size: 18px;
+      color: #46536c;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .bonus {
+      padding: 28px;
+
+      background:
+        linear-gradient(
+          150deg,
+          var(--navy),
+          var(--navy-dark)
+        );
+
+      color: white;
+
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .bonus h3 {
+      margin: 0 0 10px;
+      font-size: 27px;
+    }
+
+    .bonus strong {
+      font-size: 34px;
+      color: white;
+    }
+
+    .bonus p {
+      line-height: 1.6;
+      color: #dce5fb;
+    }
+
+    /* ================================
+       PANELS
+    ================================= */
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .panel {
+      padding: 26px;
+    }
+
+    .panel h3 {
+      margin: 0 0 16px;
+      color: var(--navy-dark);
+      font-size: 21px;
+    }
+
+    /* ================================
+       VIP TABLE
+    ================================= */
+
+    .vip-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .vip-table th,
+    .vip-table td {
+      border: 1px solid var(--line);
+      padding: 12px;
+      text-align: left;
+    }
+
+    .vip-table th {
+      background: var(--navy);
+      color: white;
+    }
+
+    .vip-table td:first-child {
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    /* ================================
+       INFO
+    ================================= */
+
+    .info-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .num {
+      min-width: 30px;
+      height: 30px;
+
+      border-radius: 50%;
+
+      background: var(--navy-soft);
+      color: var(--navy);
+
+      display: grid;
+      place-items: center;
+
+      font-weight: 900;
+    }
+
+    .info-item p {
+      margin: 2px 0 0;
+      line-height: 1.55;
+      color: #4d5a70;
+    }
+
+    .terms {
+      font-size: 14px;
+      line-height: 1.68;
+      color: #5b6679;
+    }
+
+    .terms ul {
+      padding-left: 18px;
+    }
+
+    /* ================================
+       CTA
+    ================================= */
+
+    .cta-panel {
+      margin-top: 22px;
+      padding: 28px;
+
+      border-radius: var(--radius);
+
+      background:
+        linear-gradient(
+          110deg,
+          #fff,
+          #eef3ff
+        );
+
+      border: 1px solid #ccd7ed;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    .cta-panel h3 {
+      margin: 0 0 6px;
+      color: var(--navy);
+    }
+
+    .cta-panel p {
+      margin: 0;
+      color: #5d697d;
+    }
+
+    /* ================================
+       FORM
+    ================================= */
+
+    .form-wrap {
+      width: min(880px, calc(100% - 28px));
+      margin: 32px auto 80px;
+    }
+
+    .form-card {
+      background: white;
+
+      border: 1px solid var(--line);
+      border-radius: 24px;
+
+      box-shadow: var(--shadow);
+
+      overflow: hidden;
+    }
+
+    .form-head {
+      padding: 28px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--navy),
+          var(--navy-dark)
+        );
+
+      color: white;
+
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .form-head-logo {
+      width: 105px;
+      background: white;
+      border-radius: 12px;
+      padding: 6px;
+      flex-shrink: 0;
+    }
+
+    .form-head-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .form-head h2 {
+      margin: 0 0 8px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: 34px;
+    }
+
+    .form-head p {
+      margin: 0;
+      color: #dbe5ff;
+    }
+
+    form {
+      padding: 28px;
+    }
+
+    .section-title {
+      margin: 8px 0 18px;
+      padding-bottom: 10px;
+
+      border-bottom: 1px solid var(--line);
+
+      color: var(--navy);
+
+      font-weight: 900;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 800;
+      color: #344054;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+
+      border: 1px solid #cfd7e6;
+      border-radius: 12px;
+
+      padding: 13px 14px;
+
+      background: white;
+      color: var(--ink);
+
+      outline: none;
+
+      transition: .2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--blue);
+
+      box-shadow:
+        0 0 0 4px rgba(17,22,255,.08);
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .check-row input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+    }
+
+    .check-row label {
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    /* ================================
+       STAFF
+    ================================= */
+
+    .staff-box {
+      margin-top: 24px;
+
+      border: 1px dashed #b8c6e2;
+
+      border-radius: 16px;
+
+      padding: 18px;
+
+      background: #f8faff;
+    }
+
+    .staff-box summary {
+      cursor: pointer;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    .staff-grid {
+      margin-top: 16px;
+    }
+
+    .staff-wrap {
+      width: min(980px, calc(100% - 28px));
+      margin: 32px auto 80px;
+    }
+
+    .staff-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .staff-card h1,
+    .staff-card h2 {
+      color: var(--navy-dark);
+    }
+
+    .staff-toolbar,
+    .staff-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .staff-list {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .staff-list button {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      background: #f8faff;
+      color: var(--ink);
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .staff-list button:hover {
+      border-color: var(--navy);
+    }
+
+    .staff-customer {
+      margin: 20px 0;
+      padding: 16px;
+      border-radius: 14px;
+      background: #f7f9fd;
+    }
+
+    .staff-customer p {
+      margin: 6px 0;
+    }
+
+    .staff-receipt {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .submit-row {
+      margin-top: 24px;
+
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+
+      flex-wrap: wrap;
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-top: 14px;
+    }
+
+    .error {
+      color: #b42318;
+
+      background: #fef3f2;
+
+      border: 1px solid #fecdca;
+
+      padding: 12px;
+
+      border-radius: 12px;
+
+      margin-bottom: 16px;
+
+      display: none;
+    }
+
+    /* ================================
+       SUCCESS
+    ================================= */
+
+    .success-wrap {
+      min-height: 100vh;
+
+      display: grid;
+      place-items: center;
+
+      padding: 28px;
+
+      background: #f4f7fb;
+    }
+
+    .success-card {
+      width: min(650px, 100%);
+
+      background: white;
+
+      border: 1px solid var(--line);
+      border-radius: 26px;
+
+      box-shadow: var(--shadow);
+
+      padding: 38px;
+
+      text-align: center;
+    }
+
+    .success-logo {
+      width: 125px;
+      margin: 0 auto 18px;
+
+      background: white;
+
+      border-radius: 12px;
+
+      padding: 6px;
+    }
+
+    .success-logo img {
+      width: 100%;
+      display: block;
+    }
+
+    .success-icon {
+      width: 78px;
+      height: 78px;
+
+      border-radius: 50%;
+
+      background: #ecfdf3;
+      color: var(--success);
+
+      margin: 0 auto 18px;
+
+      display: grid;
+      place-items: center;
+
+      font-size: 38px;
+      font-weight: 900;
+    }
+
+    .success-card h2 {
+      font-size: 34px;
+      margin: 0 0 10px;
+      color: var(--navy-dark);
+    }
+
+    .receipt {
+      margin: 24px 0;
+
+      padding: 18px;
+
+      border-radius: 16px;
+
+      background: #f7f9fd;
+
+      text-align: left;
+
+      border: 1px solid var(--line);
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 7px 0;
+    }
+
+    .receipt-row span:first-child {
+      color: var(--muted);
+    }
+
+    .receipt-row strong {
+      color: var(--navy);
+      text-align: right;
+    }
+
+    .feedback-box {
+      margin: 18px 0 0;
+
+      padding: 17px;
+
+      border-radius: 15px;
+
+      background: #fff8e6;
+
+      border: 1px solid #f7d98a;
+
+      color: #6b5415;
+    }
+
+    /* ================================
+       MOBILE
+    ================================= */
+
+    @media (max-width: 900px) {
+      .cover-card,
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cover-left {
+        border-right: none;
+        border-bottom: 1px dashed rgba(255,255,255,.20);
+      }
+
+      .cover-card {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .cover {
+        padding: 12px;
+      }
+
+      .cover-left,
+      .cover-right {
+        padding: 30px 22px;
+      }
+
+      .brand-logo-box {
+        width: 155px;
+      }
+
+      .cover h1 {
+        font-size: 38px;
+      }
+
+      .cover-sub {
+        font-size: 23px;
+      }
+
+      .page {
+        padding-top: 22px;
+      }
+
+      .hero-card,
+      .panel {
+        padding: 22px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      form {
+        padding: 20px;
+      }
+
+      .form-head {
+        padding: 22px;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .cta-panel {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .receipt-row {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .staff-card {
+        padding: 20px;
+      }
+
+      .mini-logo span {
+        font-size: 13px;
+      }
+
+      .mini-logo-img {
+        width: 55px;
+      }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+
+      #staffScreen,
+      #staffScreen * {
+        visibility: visible !important;
+      }
+
+      #staffScreen .topbar,
+      #staffScreen #staffLogin,
+      #staffScreen .staff-toolbar,
+      #staffScreen #staffQueueError,
+      #staffScreen #pendingList,
+      #staffScreen #emptyQueue,
+      #staffScreen #staffCompletionForm,
+      #staffScreen .no-print {
+        display: none !important;
+      }
+
+      #staffScreen .staff-wrap {
+        width: 100%;
+        margin: 0;
+      }
+
+      #staffScreen .staff-card {
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+      }
+
+      #staffScreen .staff-receipt {
+        display: block !important;
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+
+      #staffScreen .receipt {
+        border: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- =========================================
+       SCREEN 1 - COVER
+  ========================================== -->
+
+  <section id="coverScreen" class="screen active">
+
+    <div class="cover">
+
+      <div class="cover-card">
+
+        <div class="cover-left">
+
+          <div class="brand-logo-box">
+            <img
+              src="fb-fashions-logo.png"
+              alt="FB Fashions Logo"
+            >
+          </div>
+
+          <div>
+            <div class="cover-kicker">
+              FB Fashions VIP Club
+            </div>
+
+            <p class="cover-note">
+              Digital Cashback Rewards Card
+            </p>
+          </div>
+
+          <div class="cover-note">
+            SHOP MORE • EARN MORE
+          </div>
+
+        </div>
+
+        <div class="cover-right">
+
+          <div class="brand-logo-box">
+            <img
+              src="fb-fashions-logo.png"
+              alt="FB Fashions Logo"
+            >
+          </div>
+
+          <div>
+            <h1>
+              FB FASHIONS
+              <span></span>
+              VIP CLUB
+            </h1>
+
+            <div class="cover-sub">
+              CASH BACK
+            </div>
+          </div>
+
+          <div class="cover-actions">
+
+            <button
+              class="primary-btn"
+              onclick="showScreen('infoScreen')"
+            >
+              Open VIP Club
+            </button>
+
+            <a
+              class="text-btn"
+              href="?staff=1"
+            >
+              Staff portal
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================
+       SCREEN 2 - INFORMATION
+  ========================================== -->
+
+  <section id="infoScreen" class="screen">
+
+    <div class="topbar">
+
+      <div class="topbar-inner">
+
+        <div class="mini-logo">
+
+          <img
+            src="fb-fashions-logo.png"
+            alt="FB Fashions Logo"
+            class="mini-logo-img"
+          >
+
+          <span>
+            FB FASHIONS VIP CLUB
+          </span>
+
+        </div>
+
+        <button
+          class="text-btn"
+          onclick="showScreen('coverScreen')"
+        >
+          Back to cover
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <main class="page">
+
+      <div class="hero">
+
+        <div class="hero-card">
+
+          <div class="eyebrow">
+            FB Fashions VIP Club
+          </div>
+
+          <h2>
+            Shop more. Earn more.
+          </h2>
+
+          <p class="lead">
+            As an FB Fashions VIP member,
+            you earn cashback every time you shop.
+            The more you spend per year,
+            the more VIP benefits you unlock.
+          </p>
+
+        </div>
+
+
+        <div class="bonus">
+
+          <div
+            class="eyebrow"
+            style="color:#FFD700"
+          >
+            New Member Bonus
+          </div>
+
+          <h3>
+            Join today and spend
+          </h3>
+
+          <strong>
+            UGX 350,000+
+          </strong>
+
+          <p>
+            to receive an instant
+            welcome voucher worth
+            <b>UGX 50,000</b>.
+            Use it today or save it for next time.
+          </p>
+
+          <small>
+            One welcome voucher per person.
+            Valid 60 days.
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="grid">
+
+        <section class="panel">
+
+          <h3>
+            VIP Levels
+          </h3>
+
+          <table class="vip-table">
+
+            <thead>
+
+              <tr>
+                <th>VIP Level</th>
+                <th>Annual Spend</th>
+                <th>Plus</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>Blue</td>
+                <td>Join free</td>
+                <td>Birthday surprise</td>
+              </tr>
+
+              <tr>
+                <td>Silver</td>
+                <td>1,400 points</td>
+                <td>Priority support</td>
+              </tr>
+
+              <tr>
+                <td>Gold</td>
+                <td>2,400 points</td>
+                <td>Early sale access</td>
+              </tr>
+
+              <tr>
+                <td>Platinum</td>
+                <td>5,000 points</td>
+                <td>Free delivery always</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </section>
+
+
+        <section class="panel">
+
+          <h3>
+            How it works
+          </h3>
+
+          <div class="info-list">
+
+            <div class="info-item">
+
+              <div class="num">
+                1
+              </div>
+
+              <p>
+                Your cashback builds up
+                in your FB Fashions account.
+              </p>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <div class="num">
+                2
+              </div>
+
+              <p>
+                Once you reach
+                <b>600 points</b>,
+                you get a voucher
+                to spend in store.
+              </p>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <div class="num">
+                3
+              </div>
+
+              <p>
+                Your VIP status and cashback
+                stay active as long as you shop
+                at least once every 12 months.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <section class="panel">
+
+          <h3>
+            Important Terms
+          </h3>
+
+          <div class="terms">
+
+            <ul>
+
+              <li>
+                Cashback has no cash value
+                and is redeemable at
+                FB Fashions only.
+              </li>
+
+              <li>
+                One account per person.
+              </li>
+
+              <li>
+                FB Fashions may request
+                identification for verification
+                on qualifying transactions.
+              </li>
+
+              <li>
+                By joining, you agree to the
+                FB Fashions VIP Club
+                terms and conditions.
+              </li>
+
+            </ul>
+
+            <p>
+              Ask our team for full
+              terms and conditions.
+            </p>
+
+          </div>
+
+        </section>
+
+      </div>
+
+
+      <div class="cta-panel">
+
+        <div>
+
+          <h3>
+            Ready to join the VIP Club?
+          </h3>
+
+          <p>
+            Fill in your details below.
+            It takes less than a minute.
+          </p>
+
+        </div>
+
+        <button
+          class="primary-btn"
+          onclick="showScreen('formScreen')"
+        >
+          Join / Submit Details
+        </button>
+
+      </div>
+
+    </main>
+
+  </section>
+
+
+  <!-- =========================================
+       SCREEN 3 - FORM
+  ========================================== -->
+
+  <section id="formScreen" class="screen">
+
+    <div class="topbar">
+
+      <div class="topbar-inner">
+
+        <div class="mini-logo">
+
+          <img
+            src="fb-fashions-logo.png"
+            alt="FB Fashions Logo"
+            class="mini-logo-img"
+          >
+
+          <span>
+            VIP REGISTRATION
+          </span>
+
+        </div>
+
+        <button
+          class="text-btn"
+          onclick="showScreen('infoScreen')"
+        >
+          View benefits
+        </button>
+
+        <a class="text-btn" href="?staff=1">
+          Staff portal
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-wrap">
+
+      <div class="form-card">
+
+        <div class="form-head">
+
+          <div class="form-head-logo">
+
+            <img
+              src="fb-fashions-logo.png"
+              alt="FB Fashions Logo"
+            >
+
+          </div>
+
+          <div>
+
+            <h2>
+              FB Fashions VIP Club
+            </h2>
+
+            <p>
+              Enter your information to create
+              or update your cashback rewards profile.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <form id="vipForm">
+
+          <div
+            id="formError"
+            class="error"
+          ></div>
+
+
+          <div class="section-title">
+            Customer Information
+          </div>
+
+
+          <div class="form-grid">
+
+            <div class="field">
+
+              <label for="fullName">
+                Full Name *
+              </label>
+
+              <input
+                id="fullName"
+                name="fullName"
+                autocomplete="name"
+                required
+                placeholder="Your full name"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="phone">
+                Phone / WhatsApp *
+              </label>
+
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+                required
+                placeholder="+256 7XX XXX XXX"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="birthday">
+                Birthday
+              </label>
+
+              <input
+                id="birthday"
+                name="birthday"
+                type="date"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="email">
+                Email
+              </label>
+
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="name@example.com"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="referredBy">
+                Referred by
+                (Name or Phone)
+              </label>
+
+              <input
+                id="referredBy"
+                name="referredBy"
+                placeholder="Optional"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="heardAbout">
+                How did you hear about us?
+              </label>
+
+              <select
+                id="heardAbout"
+                name="heardAbout"
+              >
+
+                <option value="">
+                  Select one
+                </option>
+
+                <option>
+                  Friend / Family
+                </option>
+
+                <option>
+                  WhatsApp
+                </option>
+
+                <option>
+                  Facebook
+                </option>
+
+                <option>
+                  Instagram
+                </option>
+
+                <option>
+                  TikTok
+                </option>
+
+                <option>
+                  Website
+                </option>
+
+                <option>
+                  Walk-in / Store
+                </option>
+
+                <option>
+                  Other
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="branch">
+                Branch *
+              </label>
+
+              <select
+                id="branch"
+                name="branch"
+                required
+              >
+
+                <option value="">
+                  Select branch
+                </option>
+
+                <option>
+                  FB Fashions Kingdom Kampala
+                </option>
+
+                <option>
+                  FB Fashions Avemar
+                </option>
+
+                <option>
+                  Other FB Fashions Branch
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="purchaseAmount">
+                Purchase Amount Today
+                (UGX) *
+              </label>
+
+              <input
+                id="purchaseAmount"
+                name="purchaseAmount"
+                type="number"
+                min="0"
+                step="1000"
+                required
+                placeholder="350000"
+              >
+
+            </div>
+
+
+            <div class="field full">
+
+              <div class="check-row">
+
+                <input
+                  id="marketing"
+                  name="marketing"
+                  type="checkbox"
+                >
+
+                <label for="marketing">
+                  I agree to receive FB Fashions
+                  VIP Club and marketing messages
+                  from FB Fashions.
+                </label>
+
+              </div>
+
+            </div>
+
+
+            <div class="field full">
+
+              <div class="check-row">
+
+                <input
+                  id="terms"
+                  name="terms"
+                  type="checkbox"
+                  required
+                >
+
+                <label for="terms">
+                  I agree to the FB Fashions
+                  VIP Club terms and conditions. *
+                </label>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <p class="small">
+            Privacy note: Your details are used
+            to manage your FB Fashions VIP Club
+            rewards, customer service and,
+            where you opt in,
+            marketing communication.
+          </p>
+
+
+          <div class="submit-row">
+
+            <button
+              type="button"
+              class="secondary-btn"
+              onclick="showScreen('infoScreen')"
+            >
+              Back
+            </button>
+
+            <button
+              id="submitBtn"
+              type="submit"
+              class="primary-btn"
+            >
+              Submit VIP Details
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================
+       SCREEN 4 - SUCCESS
+  ========================================== -->
+
+  <section id="successScreen" class="screen">
+
+    <div class="success-wrap">
+
+      <div class="success-card">
+
+        <div class="success-logo">
+
+          <img
+            src="fb-fashions-logo.png"
+            alt="FB Fashions Logo"
+          >
+
+        </div>
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <h2>
+          Thank you!
+        </h2>
+
+        <p>
+          Your FB Fashions VIP Club details have been submitted.
+          A team member will complete your registration and provide
+          your receipt.
+        </p>
+
+        <div class="receipt">
+          <div class="receipt-row">
+            <span>Customer</span>
+            <strong id="rName">—</strong>
+          </div>
+          <div class="receipt-row">
+            <span>Submission reference</span>
+            <strong id="rRef">—</strong>
+          </div>
+          <div class="receipt-row">
+            <span>Status</span>
+            <strong>Waiting for staff completion</strong>
+          </div>
+        </div>
+
+
+        <div
+          class="cover-actions"
+          style="margin-top:22px"
+        >
+
+          <button
+            class="primary-btn"
+            onclick="newSubmission()"
+          >
+            Done
+          </button>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================
+       SCREEN 5 - STAFF COMPLETION
+  ========================================== -->
+
+  <section id="staffScreen" class="screen">
+
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="mini-logo">
+          <img
+            src="fb-fashions-logo.png"
+            alt="FB Fashions Logo"
+            class="mini-logo-img"
+          >
+          <span>STAFF REGISTRATION QUEUE</span>
+        </div>
+        <a class="text-btn" href="./">Customer page</a>
+      </div>
+    </div>
+
+    <div class="staff-wrap">
+      <div class="staff-card">
+
+        <div id="staffLogin">
+          <h1>Staff portal</h1>
+          <p>Enter your staff PIN to view pending customer submissions.</p>
+          <form id="staffLoginForm">
+            <div id="staffLoginError" class="error" role="alert"></div>
+            <div class="field">
+              <label for="staffPin">Staff PIN</label>
+              <input id="staffPin" type="password" autocomplete="current-password" required>
+            </div>
+            <div class="submit-row">
+              <button class="primary-btn" type="submit" id="staffLoginBtn">Open staff queue</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="staffDashboard" hidden>
+          <div class="staff-toolbar">
+            <div>
+              <h1>Pending submissions</h1>
+              <p>Select a customer to complete their VIP registration.</p>
+            </div>
+            <div class="staff-actions">
+              <button type="button" class="secondary-btn" id="refreshQueueBtn">Refresh</button>
+              <button type="button" class="secondary-btn" id="staffLogoutBtn">Lock staff portal</button>
+            </div>
+          </div>
+
+          <div id="staffQueueError" class="error" role="alert"></div>
+          <div id="pendingList" class="staff-list"></div>
+          <p id="emptyQueue" hidden>No pending customer submissions.</p>
+
+          <form id="staffCompletionForm" hidden>
+            <div class="section-title">Customer details</div>
+            <div class="staff-customer">
+              <p><strong id="staffCustomerName"></strong></p>
+              <p>Reference: <span id="staffCustomerReference"></span></p>
+              <p>Phone: <span id="staffCustomerPhone"></span></p>
+              <p>Branch: <span id="staffCustomerBranch"></span></p>
+              <p>Purchase today: <span id="staffCustomerAmount"></span></p>
+            </div>
+
+            <div class="section-title">FB Fashions Team — Staff Use Only</div>
+            <div class="form-grid staff-grid">
+              <div class="field">
+                <label for="staffName">Staff Name *</label>
+                <input id="staffName" name="staffName" required>
+              </div>
+              <div class="field">
+                <label for="firstPurchase">First Purchase Amount Today (UGX) *</label>
+                <input id="firstPurchase" name="firstPurchase" type="number" min="0" step="1000" required>
+              </div>
+              <div class="field">
+                <label for="verification">Verification *</label>
+                <select id="verification" name="verification" required>
+                  <option value="">Select</option>
+                  <option>OTP verified</option>
+                  <option>Added to POS</option>
+                  <option>Customer informed of level</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="signature">Signature / Initials *</label>
+                <input id="signature" name="signature" required>
+              </div>
+            </div>
+            <div class="submit-row">
+              <button type="submit" class="primary-btn" id="completeBtn">Complete registration</button>
+            </div>
+          </form>
+
+          <div id="staffReceipt" class="staff-receipt" hidden>
+            <div class="section-title">Completed customer receipt</div>
+            <div class="receipt">
+              <div class="receipt-row"><span>Customer</span><strong id="receiptName"></strong></div>
+              <div class="receipt-row"><span>Reference</span><strong id="receiptReference"></strong></div>
+              <div class="receipt-row"><span>Phone</span><strong id="receiptPhone"></strong></div>
+              <div class="receipt-row"><span>Branch</span><strong id="receiptBranch"></strong></div>
+              <div class="receipt-row"><span>Purchase today</span><strong id="receiptAmount"></strong></div>
+              <div class="receipt-row"><span>First purchase today</span><strong id="receiptFirstPurchase"></strong></div>
+              <div class="receipt-row"><span>Staff</span><strong id="receiptStaffName"></strong></div>
+              <div class="receipt-row"><span>Verification</span><strong id="receiptVerification"></strong></div>
+              <div class="receipt-row"><span>Staff initials</span><strong id="receiptSignature"></strong></div>
+              <div class="receipt-row"><span>VIP feedback</span><strong id="receiptFeedback"></strong></div>
+            </div>
+            <div class="feedback-box" id="receiptFeedbackText"></div>
+            <div class="submit-row no-print">
+              <button type="button" class="primary-btn" id="printReceiptBtn">Print customer receipt</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+</div>
+
+
+<script>
+
+  /* =============================================
+     GOOGLE SHEETS CONNECTION
+  ============================================== */
+
+  const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbw1LTE6P9Qsy4r1RrfqzmwnqYag4x7tCh872j2MJ5-A9z9OFn-8eMs-nhDzBwKGLSv7/exec";
+
+
+  /* =============================================
+     SCREEN NAVIGATION
+  ============================================== */
+
+  function showScreen(id) {
+
+    document
+      .querySelectorAll(".screen")
+      .forEach(screen => {
+        screen.classList.remove("active");
+      });
+
+    document
+      .getElementById(id)
+      .classList.add("active");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  /* =============================================
+     FORMAT UGX
+  ============================================== */
+
+  function formatUGX(value) {
+
+    const number =
+      Number(value || 0);
+
+    return (
+      "UGX " +
+      number.toLocaleString("en-US")
+    );
+
+  }
+
+
+  /* =============================================
+     REFERENCE NUMBER
+  ============================================== */
+
+  function makeReference() {
+
+    const date =
+      new Date();
+
+    const stamp = [
+
+      date
+        .getFullYear()
+        .toString()
+        .slice(-2),
+
+      String(
+        date.getMonth() + 1
+      )
+      .padStart(2, "0"),
+
+      String(
+        date.getDate()
+      )
+      .padStart(2, "0")
+
+    ].join("");
+
+
+    const random =
+      Math.floor(
+        1000 +
+        Math.random() *
+        9000
+      );
+
+
+    return (
+      `FBVIP-${stamp}-${random}`
+    );
+
+  }
+
+
+  /* =============================================
+     VIP FEEDBACK
+  ============================================== */
+
+  function calculateFeedback(amount) {
+
+    const money =
+      Number(amount || 0);
+
+
+    if (money >= 350000) {
+
+      return {
+
+        title:
+          "Welcome voucher qualified",
+
+        text:
+          "Congratulations! Your purchase qualifies for the new-member welcome offer. " +
+          "Our team will confirm your UGX 50,000 welcome voucher and its validity."
+
+      };
+
+    }
+
+
+    return {
+
+      title:
+        "VIP profile received",
+
+      text:
+        "Your cashback profile has been recorded. " +
+        "Keep shopping with FB Fashions to build points and unlock more VIP benefits."
+
+    };
+
+  }
+
+
+  /* =============================================
+     SEND TO BACKEND
+  ============================================== */
+
+  async function submitToBackend(payload) {
+
+    const configured =
+      GOOGLE_SCRIPT_URL &&
+      !GOOGLE_SCRIPT_URL.includes(
+        "PASTE_YOUR_"
+      );
+
+
+    if (!configured) {
+      throw new Error(
+        "Online submission is not configured yet. Please contact FB Fashions staff."
+      );
+
+    }
+
+
+    const response =
+      await fetch(
+        GOOGLE_SCRIPT_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+
+          body:
+            JSON.stringify(payload)
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Could not submit. Please check your internet connection and try again."
+      );
+
+    }
+
+
+    const result =
+      await response.json();
+
+    if (!result.ok) {
+      throw new Error(
+        result.error ||
+        "The request could not be completed. Please try again."
+      );
+    }
+
+    return result;
+
+  }
+
+
+  /* =============================================
+     STAFF QUEUE
+  ============================================== */
+
+  let staffPin = "";
+  let selectedSubmission = null;
+
+
+  function setText(id, value) {
+    document
+      .getElementById(id)
+      .textContent = value || "—";
+  }
+
+
+  function showStaffError(id, message) {
+    const box =
+      document.getElementById(id);
+
+    box.textContent = message;
+    box.style.display = message ? "block" : "none";
+  }
+
+
+  function displayCustomerSubmission(record) {
+    selectedSubmission = record;
+
+    document
+      .getElementById("staffCompletionForm")
+      .reset();
+
+    document
+      .getElementById("staffCompletionForm")
+      .hidden = false;
+
+    document
+      .getElementById("staffReceipt")
+      .hidden = true;
+
+    setText("staffCustomerName", record.fullName);
+    setText("staffCustomerReference", record.reference);
+    setText("staffCustomerPhone", record.phone);
+    setText("staffCustomerBranch", record.branch);
+    setText(
+      "staffCustomerAmount",
+      formatUGX(record.purchaseAmount)
+    );
+  }
+
+
+  function renderPendingSubmissions(records) {
+    const list =
+      document.getElementById("pendingList");
+
+    list.replaceChildren();
+
+    document
+      .getElementById("emptyQueue")
+      .hidden = records.length > 0;
+
+    records.forEach(record => {
+      const button =
+        document.createElement("button");
+
+      button.type = "button";
+      button.textContent =
+        `${record.fullName} — ${record.phone} — ${record.reference}`;
+
+      button.addEventListener("click", function() {
+        displayCustomerSubmission(record);
+      });
+
+      list.appendChild(button);
+    });
+  }
+
+
+  async function loadPendingSubmissions() {
+    showStaffError("staffQueueError", "");
+
+    try {
+      const result =
+        await submitToBackend({
+          action: "list",
+          staffPin: staffPin
+        });
+
+      renderPendingSubmissions(
+        result.submissions || []
+      );
+    }
+    catch(error) {
+      showStaffError(
+        "staffQueueError",
+        error.message ||
+        "Could not load customer submissions."
+      );
+    }
+  }
+
+
+  function showCompletedReceipt(record) {
+    const feedback =
+      calculateFeedback(record.purchaseAmount);
+
+    setText("receiptName", record.fullName);
+    setText("receiptReference", record.reference);
+    setText("receiptPhone", record.phone);
+    setText("receiptBranch", record.branch);
+    setText(
+      "receiptAmount",
+      formatUGX(record.purchaseAmount)
+    );
+    setText(
+      "receiptFirstPurchase",
+      formatUGX(record.firstPurchase)
+    );
+    setText("receiptStaffName", record.staffName);
+    setText("receiptVerification", record.verification);
+    setText("receiptSignature", record.signature);
+    setText("receiptFeedback", feedback.title);
+    setText("receiptFeedbackText", feedback.text);
+
+    document
+      .getElementById("staffCompletionForm")
+      .hidden = true;
+
+    document
+      .getElementById("staffReceipt")
+      .hidden = false;
+  }
+
+
+  document
+    .getElementById("staffLoginForm")
+    .addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const pin =
+        document.getElementById("staffPin").value.trim();
+
+      const button =
+        document.getElementById("staffLoginBtn");
+
+      button.disabled = true;
+      button.textContent = "Checking...";
+      showStaffError("staffLoginError", "");
+      staffPin = pin;
+
+      try {
+        const result =
+          await submitToBackend({
+            action: "list",
+            staffPin: staffPin
+          });
+
+        document
+          .getElementById("staffLogin")
+          .hidden = true;
+
+        document
+          .getElementById("staffDashboard")
+          .hidden = false;
+
+        renderPendingSubmissions(
+          result.submissions || []
+        );
+      }
+      catch(error) {
+        staffPin = "";
+        showStaffError(
+          "staffLoginError",
+          error.message ||
+          "Could not sign in. Check the PIN and try again."
+        );
+      }
+      finally {
+        button.disabled = false;
+        button.textContent = "Open staff queue";
+      }
+    });
+
+
+  document
+    .getElementById("refreshQueueBtn")
+    .addEventListener("click", loadPendingSubmissions);
+
+
+  document
+    .getElementById("staffLogoutBtn")
+    .addEventListener("click", function() {
+      staffPin = "";
+      selectedSubmission = null;
+      document.getElementById("staffPin").value = "";
+      document.getElementById("staffLogin").hidden = false;
+      document.getElementById("staffDashboard").hidden = true;
+      document.getElementById("staffCompletionForm").hidden = true;
+      document.getElementById("staffReceipt").hidden = true;
+      document.getElementById("staffCompletionForm").reset();
+      showStaffError("staffLoginError", "");
+      showScreen("staffScreen");
+    });
+
+
+  document
+    .getElementById("staffCompletionForm")
+    .addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const form = event.currentTarget;
+
+      if (!selectedSubmission || !form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const button =
+        document.getElementById("completeBtn");
+
+      const formData =
+        new FormData(form);
+
+      button.disabled = true;
+      button.textContent = "Saving...";
+      showStaffError("staffQueueError", "");
+
+      try {
+        const result =
+          await submitToBackend({
+            action: "complete",
+            staffPin: staffPin,
+            reference: selectedSubmission.reference,
+            staffName: formData.get("staffName"),
+            firstPurchase: Number(formData.get("firstPurchase")),
+            verification: formData.get("verification"),
+            signature: formData.get("signature")
+          });
+
+        showCompletedReceipt(
+          result.submission
+        );
+
+        await loadPendingSubmissions();
+      }
+      catch(error) {
+        showStaffError(
+          "staffQueueError",
+          error.message ||
+          "Could not complete this registration. Please try again."
+        );
+      }
+      finally {
+        button.disabled = false;
+        button.textContent = "Complete registration";
+      }
+    });
+
+
+  document
+    .getElementById("printReceiptBtn")
+    .addEventListener("click", function() {
+      window.print();
+    });
+
+
+  /* =============================================
+     FORM SUBMIT
+  ============================================== */
+
+  document
+    .getElementById("vipForm")
+    .addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+
+        const errorBox =
+          document.getElementById(
+            "formError"
+          );
+
+
+        errorBox.style.display =
+          "none";
+
+        errorBox.textContent =
+          "";
+
+
+        const form =
+          event.currentTarget;
+
+
+        if (!form.checkValidity()) {
+
+          form.reportValidity();
+
+          return;
+
+        }
+
+
+        const submitBtn =
+          document.getElementById(
+            "submitBtn"
+          );
+
+
+        submitBtn.disabled =
+          true;
+
+        submitBtn.textContent =
+          "Submitting...";
+
+
+        const formData =
+          new FormData(form);
+
+
+        const reference =
+          makeReference();
+
+
+        const payload = {
+
+          reference:
+            reference,
+
+          submittedAt:
+            new Date().toISOString(),
+
+          fullName:
+            formData.get("fullName") || "",
+
+          phone:
+            formData.get("phone") || "",
+
+          email:
+            formData.get("email") || "",
+
+          birthday:
+            formData.get("birthday") || "",
+
+          referredBy:
+            formData.get("referredBy") || "",
+
+          heardAbout:
+            formData.get("heardAbout") || "",
+
+          branch:
+            formData.get("branch") || "",
+
+          purchaseAmount:
+            Number(
+              formData.get("purchaseAmount") || 0
+            ),
+
+          marketing:
+            document
+              .getElementById("marketing")
+              .checked
+              ? "YES"
+              : "NO",
+
+          terms:
+            document
+              .getElementById("terms")
+              .checked
+              ? "YES"
+              : "NO"
+
+        };
+
+
+        try {
+
+          await submitToBackend({
+            action: "create",
+            ...payload
+          });
+
+
+          document
+            .getElementById("rName")
+            .textContent =
+            payload.fullName;
+
+
+          document
+            .getElementById("rRef")
+            .textContent =
+            reference;
+
+
+          showScreen(
+            "successScreen"
+          );
+
+        }
+
+        catch(error) {
+
+          errorBox.textContent =
+            error.message ||
+            "Submission failed. Please try again.";
+
+
+          errorBox.style.display =
+            "block";
+
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+
+        }
+
+        finally {
+
+          submitBtn.disabled =
+            false;
+
+          submitBtn.textContent =
+            "Submit VIP Details";
+
+        }
+
+      }
+    );
+
+
+  if (
+    new URLSearchParams(window.location.search)
+      .get("staff") === "1"
+  ) {
+    showScreen("staffScreen");
+  }
+
+
+  /* =============================================
+     RESET
+  ============================================== */
+
+  function newSubmission() {
+
+    document
+      .getElementById("vipForm")
+      .reset();
+
+
+    showScreen(
+      "coverScreen"
+    );
+
+  }
+
+</script>
+
+</body>
+</html>
