@@ -1972,7 +1972,7 @@
   ============================================== */
 
   const GOOGLE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbw1LTE6P9Qsy4r1RrfqzmwnqYag4x7tCh872j2MJ5-A9z9OFn-8eMs-nhDzBwKGLSv7/exec";
+  "https://script.google.com/macros/s/AKfycbz4zgqBMXLfzEUbOMkVl66p6cJvQsYtGxhMk4vvVhiyHrxuwn2M_DnGPRDlKccuoBjV/exec";
 
 
   /* =============================================
@@ -2121,53 +2121,89 @@
     }
 
 
-    let response;
+    const requestId =
+      window.crypto && typeof window.crypto.randomUUID === "function"
+        ? window.crypto.randomUUID()
+        : Date.now() + "-" + Math.random().toString(36).slice(2);
+    const iframeName = "fbCashbackRequest-" + requestId;
+    const iframe = document.createElement("iframe");
+    const form = document.createElement("form");
 
-    try {
-      response =
-        await fetch(
-          GOOGLE_SCRIPT_URL,
-          {
-            method: "POST",
+    iframe.name = iframeName;
+    iframe.title = "Submission service response";
+    iframe.hidden = true;
+    form.hidden = true;
+    form.method = "POST";
+    form.action = GOOGLE_SCRIPT_URL;
+    form.target = iframeName;
+    form.acceptCharset = "UTF-8";
 
-            headers: {
-              "Content-Type":
-                "text/plain;charset=utf-8"
-            },
+    const fields = {
+      payload: JSON.stringify(payload),
+      requestId: requestId,
+      origin: window.location.origin
+    };
 
-            body:
-              JSON.stringify(payload)
-          }
-        );
-    }
-    catch(error) {
-      throw new Error(
-        "Could not reach the submission service. Make sure the Apps Script web app is deployed with access set to Anyone, then try again."
-      );
-    }
+    Object.keys(fields).forEach(function(name) {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = fields[name];
+      form.appendChild(input);
+    });
 
+    document.body.append(iframe, form);
 
-    if (
-      response.redirected &&
-      response.url.includes("accounts.google.com")
-    ) {
-      throw new Error(
-        "The submission service requires sign-in. Set the Apps Script web app access to Anyone and deploy a new version."
-      );
-    }
+    const result = await new Promise(function(resolve, reject) {
+      const timeout = window.setTimeout(function() {
+        window.removeEventListener("message", onMessage);
+        form.remove();
+        iframe.remove();
+        reject(new Error(
+          "The submission service did not respond. Confirm the Apps Script web app is deployed with access set to Anyone, then try again."
+        ));
+      }, 30000);
 
+      function onMessage(event) {
+        if (
+          event.source !== iframe.contentWindow ||
+          !event.data ||
+          event.data.type !== "FB_CASHBACK_API_RESULT" ||
+          event.data.requestId !== requestId
+        ) {
+          return;
+        }
 
-    if (!response.ok) {
+        window.clearTimeout(timeout);
+        window.removeEventListener("message", onMessage);
+        form.remove();
+        iframe.remove();
 
-      throw new Error(
-        "Could not submit. Please check your internet connection and try again."
-      );
+        if (!event.data.result || typeof event.data.result.ok !== "boolean") {
+          reject(new Error(
+            "The submission service returned an invalid response. Please try again."
+          ));
+          return;
+        }
 
-    }
+        resolve(event.data.result);
+      }
 
+      window.addEventListener("message", onMessage);
 
-    const result =
-      await response.json();
+      try {
+        form.submit();
+      }
+      catch(error) {
+        window.clearTimeout(timeout);
+        window.removeEventListener("message", onMessage);
+        form.remove();
+        iframe.remove();
+        reject(new Error(
+          "Could not send the request. Please check your internet connection and try again."
+        ));
+      }
+    });
 
     if (!result.ok) {
       throw new Error(
